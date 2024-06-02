@@ -1,4 +1,3 @@
-import React from "react";
 import { UserSchema } from "@/schemas/userSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,16 +10,12 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogFooter,
-} from "../ui/alert-dialog";
+import { AlertDialogCancel, AlertDialogFooter } from "../ui/alert-dialog";
 import { Input } from "../ui/input";
 import { formFields } from "@/config/formFields";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Label } from "../ui/label";
 import { Button } from "../ui/button";
+import { generateId } from "@/lib/utils";
 
 const FormUserContent = () => {
   const form = useForm<z.infer<typeof UserSchema>>({
