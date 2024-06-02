@@ -1,16 +1,23 @@
 import React from "react";
 import { TableCell, TableRow } from "../ui/table";
+import { User } from "@/api/userApi";
+import { formatDate } from "@/lib/utils";
 
-const TableItem = () => {
+interface TableItemProps {
+  user: User;
+  no: number;
+}
+
+const TableItem: React.FC<TableItemProps> = ({ user, no }) => {
   return (
     <TableRow>
-      <TableCell>-</TableCell>
-      <TableCell>-</TableCell>
-      <TableCell>-</TableCell>
-      <TableCell>-</TableCell>
-      <TableCell>-</TableCell>
-      <TableCell>-</TableCell>
-      <TableCell>-</TableCell>
+      <TableCell>{no}</TableCell>
+      <TableCell>{user.name}</TableCell>
+      <TableCell>{user.address}</TableCell>
+      <TableCell>{user.gender.includes("L") ? "Pria" : "Wanita"}</TableCell>
+      <TableCell>{formatDate(user.birtDate)}</TableCell>
+      <TableCell>{formatDate(user.createdAt)}</TableCell>
+      <TableCell>Action</TableCell>
     </TableRow>
   );
 };

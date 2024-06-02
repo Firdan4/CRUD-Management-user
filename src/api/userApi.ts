@@ -1,4 +1,7 @@
-interface User {
+import axios from "axios";
+import { API } from ".";
+
+export interface User {
   id: string;
   name: string;
   address: string;
@@ -6,3 +9,7 @@ interface User {
   birtDate: string;
   createdAt: string;
 }
+
+export const getUsers = async () => {
+  return API.get<User[]>("/user");
+};

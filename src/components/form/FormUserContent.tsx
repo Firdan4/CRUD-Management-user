@@ -33,7 +33,6 @@ const FormUserContent = () => {
     if (validationParse.success) {
       const createdAt = generateDateLocalTime();
       const id = generateId();
-
       const data = {
         ...validationParse.data,
         createdAt,
