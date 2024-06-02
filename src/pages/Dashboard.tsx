@@ -2,7 +2,7 @@ import React from "react";
 import { RootLayout } from "../layout";
 import Header from "../components/Header";
 import TableUser from "@/components/table/TableUser";
-import FormUser from "@/components/FormUser";
+import FormUser from "@/components/form/FormUser";
 
 const Dashboard = () => {
   return (
