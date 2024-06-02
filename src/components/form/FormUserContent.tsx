@@ -15,7 +15,7 @@ import { Input } from "../ui/input";
 import { formFields } from "@/config/formFields";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Button } from "../ui/button";
-import { generateId } from "@/lib/utils";
+import { generateDateLocalTime, generateId } from "@/lib/utils";
 
 const FormUserContent = () => {
   const form = useForm<z.infer<typeof UserSchema>>({
@@ -30,7 +30,16 @@ const FormUserContent = () => {
 
   const onSubmit = (value: z.infer<typeof UserSchema>) => {
     const validationParse = UserSchema.safeParse(value);
-    console.log(validationParse);
+    if (validationParse.success) {
+      const createdAt = generateDateLocalTime();
+      const id = generateId();
+
+      const data = {
+        ...validationParse.data,
+        createdAt,
+        id,
+      };
+    }
   };
 
   return (
