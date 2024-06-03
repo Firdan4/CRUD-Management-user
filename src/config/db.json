@@ -6,31 +6,23 @@
       "address": "Bukittinggi",
       "gender": "L",
       "birtDate": "2024-06-04T18:29",
-      "createdAt": "2024-06-04T18:29"
+      "createdAt": "2024-06-03T18:54"
     },
     {
-      "id": "a7c44f1e-ad04-4051-ba4e-b618d85751e0",
-      "name": "real testing",
-      "address": "asasd",
-      "birtDate": "2024-06-11T14:30",
-      "gender": "L",
-      "createdAt": "2024-06-03T14:30"
-    },
-    {
-      "id": "e1bb81d2-4213-4794-992a-3df61a752fd6",
-      "name": "resr",
-      "address": "sdfs;df",
-      "birtDate": "2024-06-04T14:38",
+      "id": "92f98ac6-6044-4c70-99ac-fc1968f874a4",
+      "name": "firdan",
+      "address": "firdan1",
+      "birtDate": "2024-06-03T16:09",
       "gender": "P",
-      "createdAt": "2024-06-03T14:38"
+      "createdAt": "2024-06-03T18:55"
     },
     {
-      "id": "30efc03e-2808-4778-8253-7322d059c001",
-      "name": "heru",
-      "address": "asasd",
-      "birtDate": "2024-06-26T14:45",
-      "gender": "L",
-      "createdAt": "2024-06-03T14:45"
+      "id": "f87b3125-6a71-469b-bb14-5faf7584d3cc",
+      "name": "jsdkjfsdfj",
+      "address": "lskdjflsdjf",
+      "birtDate": "2024-06-05T18:53",
+      "gender": "P",
+      "createdAt": "2024-06-03T18:54"
     }
   ]
 }

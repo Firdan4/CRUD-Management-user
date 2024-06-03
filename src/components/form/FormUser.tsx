@@ -8,43 +8,41 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
+  // CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import FormUserContent from "./FormUserContent";
-import { Button } from "../ui/button";
-import { SetStateAction } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { hiddenForm } from "@/redux/formSlice";
+import { RootState } from "@/redux/store";
 
-interface FormUserProps {
-  showFormUser: boolean;
-  setShowFormUser: React.Dispatch<SetStateAction<boolean>>;
-}
+const FormUser: React.FC = () => {
+  const isVisible = useSelector((state: RootState) => state.form.isVisible);
+  const label = useSelector((state: RootState) => state.form.label);
 
-const FormUser: React.FC<FormUserProps> = ({
-  setShowFormUser,
-  showFormUser,
-}) => {
+  const dispatch = useDispatch();
+
   return (
-    <AlertDialog open={showFormUser} onOpenChange={setShowFormUser}>
+    <AlertDialog open={isVisible} onOpenChange={() => dispatch(hiddenForm())}>
       <Card>
         <AlertDialogTrigger>
           {/* disini error karena tidak boleh ada button lagi, nanti di perbaiki */}
 
-          <Button>Create User</Button>
+          {/* <Button>Create User</Button> */}
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             <CardHeader>
-              <CardTitle>Create project</CardTitle>
-              <CardDescription>
+              <CardTitle>{label}</CardTitle>
+              {/* <CardDescription>
                 Deploy your new project in one-click.
-              </CardDescription>
+              </CardDescription> */}
             </CardHeader>
           </AlertDialogHeader>
 
           <CardContent>
-            <FormUserContent setShowFormUser={setShowFormUser} />
+            <FormUserContent />
           </CardContent>
         </AlertDialogContent>
       </Card>

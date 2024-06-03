@@ -16,3 +16,10 @@ export const getUsers = async () => {
 export const addUser = async (data: User) => {
   return API.post("/user", data);
 };
+export const updateUser = async (data: User, id: string) => {
+  return API.patch(`/user/${id}`, data);
+};
+
+export const deleteUser = (id: string) => {
+  return API.delete(`/user/${id}`);
+};

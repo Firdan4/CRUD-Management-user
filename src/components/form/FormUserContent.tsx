@@ -17,24 +17,26 @@ import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { generateDateLocalTime, generateId } from "@/lib/utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { User, addUser } from "@/api/userApi";
-import { SetStateAction } from "react";
+import { User, addUser, updateUser } from "@/api/userApi";
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { hiddenForm } from "@/redux/formSlice";
+import { RootState } from "@/redux/store";
 
-interface FormUserContentProps {
-  setShowFormUser: React.Dispatch<SetStateAction<boolean>>;
-}
-
-const FormUserContent: React.FC<FormUserContentProps> = ({
-  setShowFormUser,
-}) => {
+const FormUserContent: React.FC = () => {
+  const { user, isDisable, isEdit } = useSelector(
+    (state: RootState) => state.form
+  );
+  const dispatch = useDispatch();
   const queryClient = useQueryClient();
+
   const form = useForm<z.infer<typeof UserSchema>>({
     resolver: zodResolver(UserSchema),
     defaultValues: {
-      name: "",
-      address: "",
-      birtDate: "",
-      gender: "",
+      name: user?.name,
+      address: user?.address,
+      birtDate: user?.birtDate,
+      gender: user?.gender,
     },
   });
 
@@ -45,8 +47,29 @@ const FormUserContent: React.FC<FormUserContentProps> = ({
       queryClient.invalidateQueries({
         queryKey: ["user"],
       });
-
-      setShowFormUser(false);
+      dispatch(hiddenForm());
+      Swal.fire({
+        title: "Created Success!",
+        icon: "success",
+        timer: 1000,
+        showConfirmButton: false,
+      });
+    },
+  });
+  const { mutate: mutateUpdateUser } = useMutation({
+    mutationKey: ["updateuser"],
+    mutationFn: (data: User) => updateUser(data, user.id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
+      dispatch(hiddenForm());
+      Swal.fire({
+        title: "Update Success!",
+        icon: "success",
+        timer: 1000,
+        showConfirmButton: false,
+      });
     },
   });
 
@@ -61,7 +84,11 @@ const FormUserContent: React.FC<FormUserContentProps> = ({
         id,
       };
 
-      mutateUser(data);
+      if (isEdit) {
+        mutateUpdateUser(validationParse.data as User);
+      } else {
+        mutateUser(data);
+      }
     }
   };
 
@@ -79,7 +106,7 @@ const FormUserContent: React.FC<FormUserContentProps> = ({
                   <span className="text-red-500">*</span>
                 </FormLabel>
                 <FormControl>
-                  <Input type={type} {...field} />
+                  <Input disabled={isDisable} type={type} {...field} />
                 </FormControl>
                 <FormMessage className="text-xs" />
               </FormItem>
@@ -100,6 +127,7 @@ const FormUserContent: React.FC<FormUserContentProps> = ({
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   className="flex flex-col space-y-1"
+                  disabled={isDisable}
                 >
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
@@ -122,7 +150,9 @@ const FormUserContent: React.FC<FormUserContentProps> = ({
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button type="submit">Continue</Button>
+          <Button type="submit" disabled={isDisable}>
+            Save
+          </Button>
         </AlertDialogFooter>
       </form>
     </Form>
