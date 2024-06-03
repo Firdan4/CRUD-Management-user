@@ -34,11 +34,11 @@ const TableUser = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isLoading && <TableSkalecton />}
-
-          {data?.map((user, index) => (
-            <TableItem user={user} no={index + 1} />
-          ))}
+          {isLoading ? (
+            <TableSkalecton />
+          ) : (
+            data?.map((user, index) => <TableItem user={user} no={index + 1} />)
+          )}
         </TableBody>
       </Table>
     </div>

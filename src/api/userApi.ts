@@ -1,4 +1,3 @@
-import axios from "axios";
 import { API } from ".";
 
 export interface User {
@@ -12,4 +11,8 @@ export interface User {
 
 export const getUsers = async () => {
   return API.get<User[]>("/user");
+};
+
+export const addUser = async (data: User) => {
+  return API.post("/user", data);
 };

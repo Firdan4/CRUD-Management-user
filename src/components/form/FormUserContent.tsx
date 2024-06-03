@@ -16,19 +16,41 @@ import { formFields } from "@/config/formFields";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { generateDateLocalTime, generateId } from "@/lib/utils";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { User, addUser } from "@/api/userApi";
+import { SetStateAction } from "react";
 
-const FormUserContent = () => {
+interface FormUserContentProps {
+  setShowFormUser: React.Dispatch<SetStateAction<boolean>>;
+}
+
+const FormUserContent: React.FC<FormUserContentProps> = ({
+  setShowFormUser,
+}) => {
+  const queryClient = useQueryClient();
   const form = useForm<z.infer<typeof UserSchema>>({
     resolver: zodResolver(UserSchema),
     defaultValues: {
       name: "",
       address: "",
       birtDate: "",
-      gender: "L",
+      gender: "",
     },
   });
 
-  const onSubmit = (value: z.infer<typeof UserSchema>) => {
+  const { mutate: mutateUser } = useMutation({
+    mutationKey: ["adduser"],
+    mutationFn: (data: User) => addUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
+
+      setShowFormUser(false);
+    },
+  });
+
+  const onSubmit = async (value: z.infer<typeof UserSchema>) => {
     const validationParse = UserSchema.safeParse(value);
     if (validationParse.success) {
       const createdAt = generateDateLocalTime();
@@ -38,6 +60,8 @@ const FormUserContent = () => {
         createdAt,
         id,
       };
+
+      mutateUser(data);
     }
   };
 
@@ -50,11 +74,14 @@ const FormUserContent = () => {
             name={name}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>{label}</FormLabel>
+                <FormLabel>
+                  {label}
+                  <span className="text-red-500">*</span>
+                </FormLabel>
                 <FormControl>
                   <Input type={type} {...field} />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-xs" />
               </FormItem>
             )}
           />
@@ -65,7 +92,9 @@ const FormUserContent = () => {
           name="gender"
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel>Jenis Kelamin</FormLabel>
+              <FormLabel>
+                Jenis Kelamin<span className="text-red-500">*</span>
+              </FormLabel>
               <FormControl>
                 <RadioGroup
                   onValueChange={field.onChange}
@@ -84,10 +113,9 @@ const FormUserContent = () => {
                     </FormControl>
                     <FormLabel className="font-normal">Wanita</FormLabel>
                   </FormItem>
-                  <FormMessage />
                 </RadioGroup>
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs" />
             </FormItem>
           )}
         />

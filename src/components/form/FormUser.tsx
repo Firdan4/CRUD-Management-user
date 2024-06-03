@@ -1,8 +1,5 @@
-import React from "react";
-
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTrigger,
@@ -17,10 +14,19 @@ import {
 } from "@/components/ui/card";
 import FormUserContent from "./FormUserContent";
 import { Button } from "../ui/button";
+import { SetStateAction } from "react";
 
-const FormUser = () => {
+interface FormUserProps {
+  showFormUser: boolean;
+  setShowFormUser: React.Dispatch<SetStateAction<boolean>>;
+}
+
+const FormUser: React.FC<FormUserProps> = ({
+  setShowFormUser,
+  showFormUser,
+}) => {
   return (
-    <AlertDialog>
+    <AlertDialog open={showFormUser} onOpenChange={setShowFormUser}>
       <Card>
         <AlertDialogTrigger>
           {/* disini error karena tidak boleh ada button lagi, nanti di perbaiki */}
@@ -38,7 +44,7 @@ const FormUser = () => {
           </AlertDialogHeader>
 
           <CardContent>
-            <FormUserContent />
+            <FormUserContent setShowFormUser={setShowFormUser} />
           </CardContent>
         </AlertDialogContent>
       </Card>

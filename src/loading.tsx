@@ -5,25 +5,25 @@ export const TableSkalecton = () => {
   return [1, 2, 3].map(() => (
     <TableRow>
       <TableCell>
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+        <Skeleton className="w-full h-[20px] rounded-full" />
       </TableCell>
       <TableCell>
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+        <Skeleton className="w-full h-[20px] rounded-full" />
       </TableCell>
       <TableCell>
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+        <Skeleton className="w-full h-[20px] rounded-full" />
       </TableCell>
       <TableCell>
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+        <Skeleton className="w-full h-[20px] rounded-full" />
       </TableCell>
       <TableCell>
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+        <Skeleton className="w-full h-[20px] rounded-full" />
       </TableCell>
       <TableCell>
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+        <Skeleton className="w-full h-[20px] rounded-full" />
       </TableCell>
       <TableCell>
-        <Skeleton className="w-[100px] h-[20px] rounded-full" />
+        <Skeleton className="w-full h-[20px] rounded-full" />
       </TableCell>
     </TableRow>
   ));
